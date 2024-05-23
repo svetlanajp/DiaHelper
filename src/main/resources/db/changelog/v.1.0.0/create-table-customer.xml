@@ -4,13 +4,9 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
     
-    <changeSet id="create_table_customer" author="yadviha">
+    <changeSet id="create-table-customer" author="yadviha">
         <createTable tableName="customer">
-            <column name="id" type="bigint">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
-
-            <column name="id" type="bigint">
+            <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
 
@@ -38,11 +34,11 @@
                 <constraints nullable="false"/>
 
             </column>
-            <column name="weight" type="decimal(7,2)" defaultValue="0">
+            <column name="weight" type="decimal(3,2)" defaultValue="0">
                 <constraints nullable="false"/>
 
             </column>
-            <column name="height" type="decimal(7,2)" defaultValue="0">
+            <column name="height" type="decimal(3,2)" defaultValue="0">
                 <constraints nullable="false"/>
             </column>
 

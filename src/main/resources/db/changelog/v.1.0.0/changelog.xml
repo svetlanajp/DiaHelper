@@ -4,17 +4,14 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
 
-    <changeSet id="add_roles" author="Yadviha">
 
-        <insert tableName="role">
-            <column name="title" value="ROLE_ADMIN"/>
-        </insert>
-
-        <insert tableName="role">
-            <column name="title" value="ROLE_USER"/>
-        </insert>
-
-
+    <changeSet id="add_tag_v.1.0.0" author="yadviha">
+        <tagDatabase tag="v.1.0.0"/>
     </changeSet>
 
+    <include file="create-table-user.xml" relativeToChangelogFile="true"/>
+    <include file="add-customers.xml" relativeToChangelogFile="true"/>
+
+
 </databaseChangeLog>
+
