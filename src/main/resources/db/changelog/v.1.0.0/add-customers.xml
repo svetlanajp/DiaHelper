@@ -6,14 +6,14 @@
 
        <changeSet id="add-customers" author="yadviha">
            <insert tableName="customer">
-               <column name="customer_name" value="Yadviha"/>
+               <column name="customer_name" value="Test"/>
                <column name="password" value="111"/>
                <column name="is_active" value="true"/>
                <column name="role_id" value="1"/>
                <column name="email" value="text@text.com"/>
-               <column name="glucose_level" value="4.00"/>
-               <column name="weight" value="55.00"/>
-               <column name="height" value="162.00"/>
+               <column name="glucose_level" value="4"/>
+               <column name="weight" value="55"/>
+               <column name="height" value="162"/>
                <column name="age" value="43"/>
            </insert>
 

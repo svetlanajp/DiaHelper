@@ -9,7 +9,7 @@
         <tagDatabase tag="v.1.0.0"/>
     </changeSet>
 
-    <include file="create-table-user.xml" relativeToChangelogFile="true"/>
+    <include file="create-table-customer.xml" relativeToChangelogFile="true"/>
     <include file="add-customers.xml" relativeToChangelogFile="true"/>
 
 
