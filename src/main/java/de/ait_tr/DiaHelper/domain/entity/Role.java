@@ -6,14 +6,14 @@ import jakarta.persistence.*;
 import java.util.Objects;
 
 @Entity
-    @Table(name = "role")
-    public class Role {
+@Table(name = "role")
+public class Role {
 
-       @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-        private String title;
+    private String title;
 
     public Long getId() {
         return id;

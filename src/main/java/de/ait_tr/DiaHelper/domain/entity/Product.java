@@ -23,21 +23,26 @@ public class Product {
             message = "Product title should be at least 3 character length, " +
                     " start with capital letter and may contain only latin characters"
     )
-    private String product_title;
+    private String productTitle;
     @Column(name = "glucose")
     @NotNull(message = "Can not be null")
     @NotBlank(message = "Can not be blank")
     private BigDecimal glucose;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @Column(name = "category_id")
+
+//    @ManyToOne(fetch = FetchType.EAGER)
+//    @JoinTable(
+//            name = "category",
+//            joinColumns = @JoinColumn(name = "id")
+//                )
+//    //@JoinColumn (name = "category_id")
     private String category;
 
     public Product() {
     }
 
-    public Product(Long id, String product_title, BigDecimal glucose, String category) {
+    public Product(Long id, String productTitle, BigDecimal glucose, String category) {
         this.id = id;
-        this.product_title = product_title;
+        this.productTitle = productTitle;
         this.glucose = glucose;
         this.category = category;
     }
@@ -50,12 +55,12 @@ public class Product {
         this.id = id;
     }
 
-    public String getTitle() {
-        return product_title;
+    public String getProductTitle() {
+        return productTitle;
     }
 
-    public void setTitle(String title) {
-        this.product_title = title;
+    public void setProductTitle(String productTitle) {
+        this.productTitle = productTitle;
     }
 
     public BigDecimal getGlucose() {
@@ -66,7 +71,7 @@ public class Product {
         this.glucose = glucose;
     }
 
-    public String isCategory() {
+    public String getCategory() {
         return category;
     }
 
@@ -79,17 +84,17 @@ public class Product {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Product product = (Product) o;
-        return Objects.equals(id, product.id) && Objects.equals(product_title, product.product_title) && Objects.equals(glucose, product.glucose) && Objects.equals(category, product.category);
+        return Objects.equals(id, product.id) && Objects.equals(productTitle, product.productTitle) && Objects.equals(glucose, product.glucose) && Objects.equals(category, product.category);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, product_title, glucose, category);
+        return Objects.hash(id, productTitle, glucose, category);
     }
 
     @Override
     public String toString() {
         return String.format("Product: ID - %d, product_title - %s, glucose - %.2f, category - %s",
-                id, product_title, glucose, category);
+                id, productTitle, glucose, category);
     }
 }

@@ -15,7 +15,7 @@
                 <constraints nullable="false" />
             </column>
 
-            <column name="date" type="DATE" defaultValue="CURRENT_DATE">
+            <column name="date" type="DATE">
                 <constraints nullable="false"/>
             </column>
 

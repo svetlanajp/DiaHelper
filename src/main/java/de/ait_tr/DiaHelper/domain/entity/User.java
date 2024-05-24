@@ -25,7 +25,7 @@ public class User {
             message = "User name should be at least 3 character length, " +
                     " start with capital letter and may contain only latin characters"
     )
-    private String name;
+    private String username;
 
     @Column(name = "password")
     @NotNull(message = "Password can not be null")
@@ -39,7 +39,7 @@ public class User {
     @Column(name = "is_active")
     private boolean isActive;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "role_id")
     private Role role;
 
@@ -79,11 +79,11 @@ public class User {
     }
 
     public String getName() {
-        return name;
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -155,18 +155,17 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return isActive == user.isActive && Double.compare(user.weight, weight) == 0 && Double.compare(user.height, height) == 0 && age == user.age && Objects.equals(id, user.id) && Objects.equals(name, user.name) && Objects.equals(password, user.password) && Objects.equals(role, user.role) && Objects.equals(email, user.email) && Objects.equals(glucoseLevel, user.glucoseLevel);
+        return isActive == user.isActive && Double.compare(user.weight, weight) == 0 && Double.compare(user.height, height) == 0 && age == user.age && Objects.equals(id, user.id) && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(role, user.role) && Objects.equals(email, user.email) && Objects.equals(glucoseLevel, user.glucoseLevel);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, password, isActive, role, email, glucoseLevel, weight, height, age);
+        return Objects.hash(id, username, password, isActive, role, email, glucoseLevel, weight, height, age);
     }
-
 
     @Override
     public String toString() {
         return String.format("User: ID - %d, name - %s, password - %s, active - %s, role - %s, email - %s, glucoseLevel - %.2f, weight - %.2f, height - %.2f, age - %d",
-                id, name, password, isActive ? "yes" : "no", role, email, glucoseLevel, weight, height, age);
+                id, username, password, isActive ? "yes" : "no", role, email, glucoseLevel, weight, height, age);
     }
 }
