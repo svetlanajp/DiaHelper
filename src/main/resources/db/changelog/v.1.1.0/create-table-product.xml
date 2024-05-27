@@ -20,7 +20,7 @@
             </column>
 
             <column name="category_id" type="bigint">
-                <constraints nullable="false" unique="true"/>
+                <constraints nullable="false" />
             </column>
 
         </createTable>

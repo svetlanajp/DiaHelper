@@ -24,7 +24,7 @@
             </column>
 
             <column name="role_id" type="bigint">
-                <constraints nullable="false" unique="true"/>
+                <constraints nullable="false" />
             </column>
 
             <column name="email" type="varchar(64)" defaultValue="test@test.com">
