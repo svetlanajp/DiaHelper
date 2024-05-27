@@ -28,7 +28,7 @@
             </column>
 
             <column name="email" type="varchar(64)" defaultValue="test@test.com">
-                <constraints nullable="false"/>
+                <constraints nullable="false" unique="true"/>
             </column>
 
             <column name="glucose_level" type="decimal(7,2)" defaultValue="0">
