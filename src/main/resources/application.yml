@@ -1,4 +1,7 @@
 spring:
+  mvc:
+    servlet:
+      path: /api
   datasource:
     url: jdbc:postgresql://localhost:5432/DiaHelper
     username: postgres

@@ -1,10 +1,9 @@
 package de.ait_tr.DiaHelper.controller;
 
+import de.ait_tr.DiaHelper.domain.dto.UserDto;
 import de.ait_tr.DiaHelper.domain.entity.User;
 import de.ait_tr.DiaHelper.service.interfaces.UserService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/users")
@@ -15,9 +14,12 @@ public class UserController {
         this.service = service;
     }
 
-    @GetMapping
-    public User getById(Long id){
+    @GetMapping("/{id}")
+    public UserDto getById(@PathVariable Long id){
         return service.getUserById(id);
     }
 
+    @PostMapping
+    public UserDto save(@RequestBody UserDto user){
+        return service.save(user);}
 }
