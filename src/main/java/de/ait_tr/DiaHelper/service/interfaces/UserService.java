@@ -1,5 +1,6 @@
 package de.ait_tr.DiaHelper.service.interfaces;
 
+import de.ait_tr.DiaHelper.domain.dto.UserDto;
 import de.ait_tr.DiaHelper.domain.entity.User;
 
 public interface UserService {
@@ -8,4 +9,5 @@ public interface UserService {
     User getUserById(Long id);
     User update(User user);
     void deleteById(Long id);
+    User register(UserDto userDto);
 }
