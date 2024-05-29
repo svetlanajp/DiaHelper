@@ -1,28 +1,19 @@
-package de.ait_tr.DiaHelper.domain.entity;
+package de.ait_tr.DiaHelper.domain.dto;
 
-import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.util.Objects;
 
+public class ShoppingListDto {
 
-@Entity
-@Table(name = "shopping_list")
-public class ShoppingList {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
-    @Column(name = "title")
-      private String title;
-    @Column(name = "date")
+    private String title;
     private LocalDate date;
 
-    public ShoppingList() {
+    public ShoppingListDto() {
     }
 
-    public ShoppingList(Long id, String title, LocalDate date) {
+    public ShoppingListDto(Long id, String title, LocalDate date) {
         this.id = id;
         this.title = title;
         this.date = date;
@@ -56,7 +47,7 @@ public class ShoppingList {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ShoppingList that = (ShoppingList) o;
+        ShoppingListDto that = (ShoppingListDto) o;
         return Objects.equals(id, that.id) && Objects.equals(title, that.title) && Objects.equals(date, that.date);
     }
 
@@ -67,7 +58,7 @@ public class ShoppingList {
 
     @Override
     public String toString() {
-        return String.format("Shopping list: ID - %d, title - %s, date - %s",///?????date
-                id, title,date);
+        return String.format("Shopping list: ID - %d, title - %s, date - %s",
+                id, title, date);
     }
 }
