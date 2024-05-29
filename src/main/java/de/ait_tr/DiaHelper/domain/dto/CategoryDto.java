@@ -1,18 +1,10 @@
-package de.ait_tr.DiaHelper.domain.entity;
-
-
-import jakarta.persistence.*;
+package de.ait_tr.DiaHelper.domain.dto;
 
 import java.util.Objects;
 
-@Entity
-    @Table(name = "category")
-    public class Category {
+    public class CategoryDto {
 
-       @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Long id;
-
         private String title;
 
     public Long getId() {
@@ -35,7 +27,7 @@ import java.util.Objects;
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Category category = (Category) o;
+        CategoryDto category = (CategoryDto) o;
         return Objects.equals(id, category.id) && Objects.equals(title, category.title);
     }
 
