@@ -16,7 +16,7 @@ public class ProductController {
         this.service = service;
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/**")
     public ProductDto getById(@RequestParam Long id) {
         return service.getById(id);
     } //  localhost:8080/products/5
@@ -27,17 +27,17 @@ public class ProductController {
     } //  localhost:8080/products/all
 
     // Сохранять новый продукт в базе данных, может только администратор (пользователь с ролью ADMIN) return service.save(product);
-    @PostMapping("/{id}")
+    @PostMapping("/**")
     public ProductDto save(@RequestBody ProductDto product) {//  localhost:8080/products/5
         return service.save(product);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/**")
     public void update(@RequestBody ProductDto product) {
         service.update(product);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/**")
     public void deleteById(@PathVariable Long id) {
         service.deleteById(id);
     }

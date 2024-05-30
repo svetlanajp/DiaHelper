@@ -33,12 +33,12 @@ public class Product {
     @NotBlank(message = "Can not be blank")
     private BigDecimal glucose;
 
-    //    @ManyToOne(fetch = FetchType.EAGER)
-//    @JoinTable(
-//            name = "category",
-//            joinColumns = @JoinColumn(name = "id")
-//                )
-//    //@JoinColumn (name = "category_id")
+//    @ManyToOne(fetch = FetchType.EAGER)
+////    @JoinTable(
+////            name = "category",
+////            joinColumns = @JoinColumn(name = "id")
+////                )
+//    @JoinColumn (name = "category_id")
     private String category;
 
     public Product() {
