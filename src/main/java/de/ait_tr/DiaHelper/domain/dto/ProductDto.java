@@ -7,7 +7,6 @@ public class ProductDto {
     private Long id;
     private String productTitle;
     private BigDecimal glucose;
-    private String category;
 
 
     public Long getId() {
@@ -34,30 +33,23 @@ public class ProductDto {
         this.glucose = glucose;
     }
 
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ProductDto that = (ProductDto) o;
-        return Objects.equals(id, that.id) && Objects.equals(productTitle, that.productTitle) && Objects.equals(glucose, that.glucose) && Objects.equals(category, that.category);
+        return Objects.equals(id, that.id) && Objects.equals(productTitle, that.productTitle) && Objects.equals(glucose, that.glucose);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, productTitle, glucose, category);
+        return Objects.hash(id, productTitle, glucose);
     }
 
     @Override
     public String toString() {
-        return String.format("Product: ID - %d, productTitle - %s, glucose - %.2f, category - %s",
-                id, productTitle, glucose, category);
+        return String.format("Product: ID - %d, productTitle - %s, glucose - %.2f  ",
+                id, productTitle, glucose);
     }
 }

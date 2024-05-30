@@ -1,5 +1,5 @@
-package de.ait_tr.DiaHelper.security;
-
-public class SecurityConfig {
-
-}
+//package de.ait_tr.DiaHelper.security;
+//
+//public class SecurityConfig {
+//
+//}

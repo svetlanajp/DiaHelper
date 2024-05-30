@@ -10,46 +10,39 @@ import java.util.List;
 @RestController
 @RequestMapping("/products")
 public class ProductController {
-
     private ProductService service;
 
     public ProductController(ProductService service) {
         this.service = service;
     }
 
-
-    // GET - localhost:8080/products/5
-    @GetMapping("/products/{id}")
-    public ProductDto getById(@PathVariable Long id) {
+    @GetMapping("/{id}")
+    public ProductDto getById(@RequestParam Long id) {
         return service.getById(id);
-    }
+    } //  localhost:8080/products/5
 
-    // GET - localhost:8080/products/all
-
-    @GetMapping("/products/all")
+    @GetMapping("/all")
     public List<ProductDto> getAll() {
         return service.getAll();
-    }
+    } //  localhost:8080/products/all
 
-
-    // Сохранять новый продукт в базе данных
-    // может только администратор (пользователь с ролью ADMIN) return service.save(product);
-    @PostMapping("/products/save/{id}")
-    public ProductDto save(@RequestBody ProductDto product) {
+    // Сохранять новый продукт в базе данных, может только администратор (пользователь с ролью ADMIN) return service.save(product);
+    @PostMapping("/{id}")
+    public ProductDto save(@RequestBody ProductDto product) {//  localhost:8080/products/5
         return service.save(product);
     }
 
-    @PutMapping("/products/update/{id}")
+    @PutMapping("/{id}")
     public void update(@RequestBody ProductDto product) {
         service.update(product);
     }
 
-    @DeleteMapping("/products/delete/{id}")
+    @DeleteMapping("/{id}")
     public void deleteById(@PathVariable Long id) {
         service.deleteById(id);
     }
 
-    @DeleteMapping("/products/title/{productTitle}")
+    @DeleteMapping("/{productTitle}")
     public void deleteByProductTitle(@PathVariable String productTitle) {
         service.deleteByProductTitle(productTitle);
     }

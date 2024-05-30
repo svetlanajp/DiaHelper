@@ -5,6 +5,7 @@ import jakarta.validation.constraints.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.math.BigDecimal;
 import java.util.Collection;
@@ -15,6 +16,10 @@ import java.util.stream.Collectors;
 @Entity
 @Table(name = "user")
 public class User  implements UserDetails {
+
+//    public static void main(String[] args) {
+//        new BCryptPasswordEncoder().encode("111");
+//    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,7 +58,7 @@ public class User  implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles.stream()
-                .map(role -> new SimpleGrantedAuthority(role.getUserName()))
+                .map(role -> new SimpleGrantedAuthority(role.getTitle()))
                 .collect(Collectors.toList());
     }
 
@@ -168,6 +173,10 @@ public class User  implements UserDetails {
 
     public void setGlucoseLevel(BigDecimal glucoseLevel) {
         this.glucoseLevel = glucoseLevel;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public double getWeight() {

@@ -1,26 +1,43 @@
 package de.ait_tr.DiaHelper.service;
 
 import de.ait_tr.DiaHelper.domain.dto.ProductDto;
+import de.ait_tr.DiaHelper.domain.entity.Product;
+import de.ait_tr.DiaHelper.repository.ProductRepository;
 import de.ait_tr.DiaHelper.service.interfaces.ProductService;
+import de.ait_tr.DiaHelper.service.mapping.ProductMappingService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Scanner;
 
 @Service
 public class ProductServiceImpl implements ProductService {
+
+    private ProductRepository repository;
+    private ProductMappingService mappingService;
+
+    public ProductServiceImpl(ProductRepository repository, ProductMappingService mappingService) {
+        this.repository = repository;
+        this.mappingService = mappingService;
+    }
     private List<ProductDto> products = new ArrayList<>();
 
     @Override
-    public ProductDto save(ProductDto product) {
-        products.add(product);
-        return product;
+    public ProductDto save(ProductDto productDto) {
+
+        Product entyti = mappingService.mapDtoToEntity(productDto);
+        repository.save(entyti);
+        return mappingService.mapEntityToDto(entyti);
     }
 
     @Override
     public List<ProductDto> getAll() {
-        return new ArrayList<>(products);
+        return repository.findAll()
+                .stream()
+                .map(x -> mappingService.mapEntityToDto(x))
+                .toList();
     }
 
     @Override

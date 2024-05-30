@@ -15,6 +15,8 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
+
+
     @Column(name = "product_title")
     @NotNull(message = "Product title can not be null")
     @NotBlank(message = "Product title can not be empty")
@@ -24,12 +26,14 @@ public class Product {
                     " start with capital letter and may contain only latin characters"
     )
     private String productTitle;
+
+
     @Column(name = "glucose")
     @NotNull(message = "Can not be null")
     @NotBlank(message = "Can not be blank")
     private BigDecimal glucose;
 
-//    @ManyToOne(fetch = FetchType.EAGER)
+    //    @ManyToOne(fetch = FetchType.EAGER)
 //    @JoinTable(
 //            name = "category",
 //            joinColumns = @JoinColumn(name = "id")
