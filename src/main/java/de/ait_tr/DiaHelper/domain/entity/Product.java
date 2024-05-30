@@ -28,28 +28,20 @@ public class Product {
     private String productTitle;
 
 
-    @Column(name = "glucose")
+    @Column(name = "calories")
     @NotNull(message = "Can not be null")
     @NotBlank(message = "Can not be blank")
-    private BigDecimal glucose;
-
-//    @ManyToOne(fetch = FetchType.EAGER)
-////    @JoinTable(
-////            name = "category",
-////            joinColumns = @JoinColumn(name = "id")
-////                )
-//    @JoinColumn (name = "category_id")
-    private String category;
+    private int calories;
 
     public Product() {
     }
 
-    public Product(Long id, String productTitle, BigDecimal glucose, String category) {
+    public Product(Long id, String productTitle, int calories) {
         this.id = id;
         this.productTitle = productTitle;
-        this.glucose = glucose;
-        this.category = category;
-    }
+        this.calories = calories;
+      }
+
 
     public Long getId() {
         return id;
@@ -67,20 +59,12 @@ public class Product {
         this.productTitle = productTitle;
     }
 
-    public BigDecimal getGlucose() {
-        return glucose;
+    public int getCalories() {
+        return calories;
     }
 
-    public void setGlucose(BigDecimal glucose) {
-        this.glucose = glucose;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
+    public void setCalories(int calories) {
+        this.calories = calories;
     }
 
     @Override
@@ -88,17 +72,17 @@ public class Product {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Product product = (Product) o;
-        return Objects.equals(id, product.id) && Objects.equals(productTitle, product.productTitle) && Objects.equals(glucose, product.glucose) && Objects.equals(category, product.category);
+        return calories == product.calories && Objects.equals(id, product.id) && Objects.equals(productTitle, product.productTitle);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, productTitle, glucose, category);
+        return Objects.hash(id, productTitle, calories);
     }
 
     @Override
     public String toString() {
-        return String.format("Product: ID - %d, product_title - %s, glucose - %.2f, category - %s",
-                id, productTitle, glucose, category);
+        return String.format("Product: ID - %d, product_title - %s, calories - %d",
+                id, productTitle, calories);
     }
 }

@@ -6,7 +6,7 @@ import java.util.Objects;
 public class ProductDto {
     private Long id;
     private String productTitle;
-    private BigDecimal glucose;
+    private int calories;
 
 
     public Long getId() {
@@ -25,31 +25,31 @@ public class ProductDto {
         this.productTitle = productTitle;
     }
 
-    public BigDecimal getGlucose() {
-        return glucose;
+
+    public int getCalories() {
+        return calories;
     }
 
-    public void setGlucose(BigDecimal glucose) {
-        this.glucose = glucose;
+    public void setCalories(int calories) {
+        this.calories = calories;
     }
-
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ProductDto that = (ProductDto) o;
-        return Objects.equals(id, that.id) && Objects.equals(productTitle, that.productTitle) && Objects.equals(glucose, that.glucose);
+        return calories == that.calories && Objects.equals(id, that.id) && Objects.equals(productTitle, that.productTitle);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, productTitle, glucose);
+        return Objects.hash(id, productTitle, calories);
     }
 
     @Override
     public String toString() {
-        return String.format("Product: ID - %d, productTitle - %s, glucose - %.2f  ",
-                id, productTitle, glucose);
+        return String.format("Product: ID - %d, productTitle - %s, calories - %d ",
+                id, productTitle, calories);
     }
 }
