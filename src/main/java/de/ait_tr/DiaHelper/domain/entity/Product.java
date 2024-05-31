@@ -17,7 +17,7 @@ public class Product {
     private Long id;
 
 
-    @Column(name = "product_title")
+    @Column(name = "product_name")
     @NotNull(message = "Product title can not be null")
     @NotBlank(message = "Product title can not be empty")
     @Pattern(

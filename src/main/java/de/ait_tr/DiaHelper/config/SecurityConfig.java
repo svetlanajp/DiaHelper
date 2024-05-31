@@ -29,14 +29,14 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
                 .authorizeHttpRequests(x -> x
                         .requestMatchers(HttpMethod.GET, "/products/all").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/products/{id}").hasAnyRole("ADMIN", "USER")
-                        .requestMatchers(HttpMethod.POST, "/products/{id}").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/products/{id}").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/products/{id}").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/register").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/products/**").hasAnyRole("ADMIN", "USER")
+                        .requestMatchers(HttpMethod.POST, "/products/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/products/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/products/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/products/{productTitle}").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
                 .build();
     }
-
 }
