@@ -1,8 +1,8 @@
 spring:
   datasource:
+    driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/DiaHelper
     username: postgres
-    driver-class-name: org.postgresql.Driver
     password: qwerty007
   liquibase:
     change-log: classpath:db/changelog/db.changelog-master.xml

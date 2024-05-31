@@ -3,7 +3,6 @@ package de.ait_tr.DiaHelper.domain.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
-import java.math.BigDecimal;
 import java.util.Objects;
 
 

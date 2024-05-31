@@ -21,8 +21,9 @@ public class ProductController {
         return service.getById(id);
     } //  localhost:8080/products/5
 
-    @GetMapping("/all")
+    @GetMapping
     public List<ProductDto> getAll() {
+
         return service.getAll();
     } //  localhost:8080/products/all
 
