@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/users")
 public class UserController {
     private UserService service;
 
@@ -19,5 +19,7 @@ public class UserController {
     public User getById(Long id){
         return service.getUserById(id);
     }
+
+
 
 }

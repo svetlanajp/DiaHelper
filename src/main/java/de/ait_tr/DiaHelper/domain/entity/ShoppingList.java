@@ -17,7 +17,7 @@ public class ShoppingList {
     @Column(name = "title")
       private String title;
     @Column(name = "date")
-    private LocalDate date = LocalDate.now();
+    private LocalDate date;
 
     public ShoppingList() {
     }

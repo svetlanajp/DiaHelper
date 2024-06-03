@@ -1,17 +1,25 @@
 package de.ait_tr.DiaHelper.domain.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "user")
-public class User {
+public class User  implements UserDetails {
+
+//    public static void main(String[] args) {
+//        new BCryptPasswordEncoder().encode("111");
+//    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,9 +47,22 @@ public class User {
     @Column(name = "is_active")
     private boolean isActive;
 
-    @ManyToOne
-    @JoinColumn(name = "role_id")
-    private Role role;
+    @ManyToMany(fetch = FetchType.EAGER)
+    //@JoinColumn(name = "role_id")
+    @JoinTable(
+            name = "user_role",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<Role> roles;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return roles.stream()
+                .map(role -> new SimpleGrantedAuthority(role.getTitle()))
+                .collect(Collectors.toList());
+    }
+
 
     @Column(name = "email")
     @Pattern(
@@ -53,17 +74,20 @@ public class User {
     private String email;
 
     @Column(name = "glucose_level")
-    @NotNull(message = "Password can not be null")
-    @NotEmpty(message = "Password can not be null")
+//    @NotNull(message = "Glucose level can not be null")
+//    @DecimalMin(value = "1", inclusive = false, message = "Glucose level must be greater than 0")
     private BigDecimal glucoseLevel;
 
     @Column(name = "weight")
+    @NotNull(message = "Weight can not be null")
     private double weight;
 
     @Column(name = "height")
+    @NotNull(message = "Height can not be null")
     private double height;
 
     @Column(name = "age")
+    @NotNull(message = "Age can not be null")
     private int age;
 
 
@@ -90,6 +114,31 @@ public class User {
         return password;
     }
 
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
     public void setPassword(String password) {
         this.password = password;
     }
@@ -102,12 +151,13 @@ public class User {
         isActive = active;
     }
 
-    public Role getRole() {
-        return role;
+
+    public Set<Role> getRoles() {
+        return roles;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
     public String getEmail() {
@@ -124,6 +174,10 @@ public class User {
 
     public void setGlucoseLevel(BigDecimal glucoseLevel) {
         this.glucoseLevel = glucoseLevel;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public double getWeight() {
@@ -155,17 +209,19 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return isActive == user.isActive && Double.compare(user.weight, weight) == 0 && Double.compare(user.height, height) == 0 && age == user.age && Objects.equals(id, user.id) && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(role, user.role) && Objects.equals(email, user.email) && Objects.equals(glucoseLevel, user.glucoseLevel);
+        return isActive == user.isActive && Double.compare(user.weight, weight) == 0 && Double.compare(user.height, height) == 0 && age == user.age && Objects.equals(id, user.id) && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(roles, user.roles) && Objects.equals(email, user.email) && Objects.equals(glucoseLevel, user.glucoseLevel);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, password, isActive, role, email, glucoseLevel, weight, height, age);
+        return Objects.hash(id, username, password, isActive, roles, email, glucoseLevel, weight, height, age);
     }
 
     @Override
     public String toString() {
         return String.format("User: ID - %d, name - %s, password - %s, active - %s, role - %s, email - %s, glucoseLevel - %.2f, weight - %.2f, height - %.2f, age - %d",
-                id, username, password, isActive ? "yes" : "no", role, email, glucoseLevel, weight, height, age);
+                id, username, password, isActive ? "yes" : "no", roles, email, glucoseLevel, weight, height, age);
     }
+
+
 }
