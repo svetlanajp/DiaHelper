@@ -48,6 +48,7 @@ public class User  implements UserDetails {
     private boolean isActive;
 
     @ManyToMany(fetch = FetchType.EAGER)
+    //@JoinColumn(name = "role_id")
     @JoinTable(
             name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -73,8 +74,8 @@ public class User  implements UserDetails {
     private String email;
 
     @Column(name = "glucose_level")
-    @NotNull(message = "Glucose level can not be null")
-    @DecimalMin(value = "0", inclusive = false, message = "Glucose level must be greater than 0")
+//    @NotNull(message = "Glucose level can not be null")
+//    @DecimalMin(value = "1", inclusive = false, message = "Glucose level must be greater than 0")
     private BigDecimal glucoseLevel;
 
     @Column(name = "weight")

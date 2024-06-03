@@ -6,41 +6,41 @@ import java.math.BigDecimal;
 
 
 public class UserDto {
-    @NotBlank(message = "User name can not be empty")
-    @Pattern(
-            regexp = "[A-Z][a-z]{2,}",
-            message = "User name should be at least 3 character length, " +
-                    " start with capital letter and may contain only latin characters"
-    )
+//    @NotBlank(message = "User name can not be empty")
+//    @Pattern(
+//            regexp = "[A-Z][a-z]{2,}",
+//            message = "User name should be at least 3 character length, " +
+//                    " start with capital letter and may contain only latin characters"
+//    )
     private String username;
 
-    @NotNull(message = "Password can not be null")
-    @NotEmpty(message = "Password can not be empty")
-    @Pattern(
-            regexp = "^(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$",
-            message = "Password must be at least 8 characters long, contain at least one uppercase letter, one digit, and one special character (@$!%*?&)"
-    )
+//    @NotNull(message = "Password can not be null")
+//    @NotEmpty(message = "Password can not be empty")
+//    @Pattern(
+//            regexp = "^(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$",
+//            message = "Password must be at least 8 characters long, contain at least one uppercase letter, one digit, and one special character (@$!%*?&)"
+//    )
     private String password;
 
-    @Pattern(
-            regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
-            message = "Invalid email format: email should contain only latin letters, digits, '@', '-', '_', and have a valid domain"
-    )
-    @NotNull(message = "Email can not be null")
-    @NotEmpty(message = "Email can not be empty")
+//    @Pattern(
+//            regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
+//            message = "Invalid email format: email should contain only latin letters, digits, '@', '-', '_', and have a valid domain"
+//    )
+//    @NotNull(message = "Email can not be null")
+//    @NotEmpty(message = "Email can not be empty")
     private String email;
 
-    @NotNull(message = "Glucose level can not be null")
-    @DecimalMin(value = "0", inclusive = false, message = "Glucose level must be greater than 0")
+//    @NotNull(message = "Glucose level can not be null")
+//    @DecimalMin(value = "0", inclusive = false, message = "Glucose level must be greater than 0")
     private BigDecimal glucoseLevel;
 
-    @NotNull(message = "Weight can not be null")
+//    @NotNull(message = "Weight can not be null")
     private double weight;
 
-    @NotNull(message = "Height can not be null")
+//    @NotNull(message = "Height can not be null")
     private double height;
 
-    @NotNull(message = "Age can not be null")
+//    @NotNull(message = "Age can not be null")
     private int age;
 
     // Геттеры и сеттеры
@@ -98,9 +98,5 @@ public class UserDto {
 
     public void setAge(int age) {
         this.age = age;
-
     }
-
-
-
 }

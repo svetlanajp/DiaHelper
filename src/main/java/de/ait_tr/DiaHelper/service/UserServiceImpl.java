@@ -2,6 +2,7 @@ package de.ait_tr.DiaHelper.service;
 
 import de.ait_tr.DiaHelper.domain.dto.UserDto;
 import de.ait_tr.DiaHelper.domain.entity.User;
+import de.ait_tr.DiaHelper.exception_handling.exceptions.UserNotFoundException;
 import de.ait_tr.DiaHelper.repository.UserRepository;
 import de.ait_tr.DiaHelper.service.interfaces.EmailService;
 import de.ait_tr.DiaHelper.service.interfaces.RoleService;
@@ -36,13 +37,10 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-
     public void register(User user) {
         user.setId(null);
         user.setPassword(encoder.encode(user.getPassword()));
-
         user.setRoles(Set.of(roleService.getRoleUser()));
-
         user.setActive(false);
 
         repository.save(user);
@@ -52,12 +50,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User save(User user) {
-        return null;
+        return user;
     }
+
+
 
     @Override
     public User getUserById(Long id) {
-        return null;
+        if (id == null || id < 1) {
+            throw new UserNotFoundException(id);
+        }
+        User user = repository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
+        return user;
     }
 
     @Override
@@ -65,13 +69,9 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
+
     @Override
     public void deleteById(Long id) {
-
     }
 
-    @Override
-    public User register(UserDto userDto) {
-        return null;
-    }
 }
