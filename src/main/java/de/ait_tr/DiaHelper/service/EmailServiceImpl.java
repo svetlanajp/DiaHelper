@@ -3,6 +3,7 @@ package de.ait_tr.DiaHelper.service;
 import de.ait_tr.DiaHelper.domain.entity.User;
 import de.ait_tr.DiaHelper.service.interfaces.ConfirmationService;
 import de.ait_tr.DiaHelper.service.interfaces.EmailService;
+import freemarker.cache.ClassTemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import jakarta.mail.internet.MimeMessage;
@@ -19,6 +20,15 @@ public class EmailServiceImpl implements EmailService {
     private JavaMailSender sender;
     private Configuration mailConfiguration;
     private ConfirmationService confirmationService;
+
+    public EmailServiceImpl(JavaMailSender sender, Configuration mailConfiguration, ConfirmationService confirmationService) {
+        this.sender = sender;
+        this.mailConfiguration = mailConfiguration;
+        this.confirmationService = confirmationService;
+
+        mailConfiguration.setDefaultEncoding("UTF-8");
+        mailConfiguration.setTemplateLoader(new ClassTemplateLoader(EmailServiceImpl.class, "/mail/"));
+    }
 
     @Override
     public void sendConfirmationEmail(User user) {
