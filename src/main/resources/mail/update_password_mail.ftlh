@@ -5,8 +5,8 @@
     <title>Email Confirmation</title>
 </head>
 <body>
-<h1 style="color: green">Подтверждение регистрации</h1>
+<h1 style="color: green">Новый пароль</h1>
 <h2>Добрый день, ${name}!</h2>
-<p>Ваш пароль:  <b> ${password}</b></p>
+<p>Ваш новый пароль:  <b> ${password}</b></p>
 </body>
 </html>

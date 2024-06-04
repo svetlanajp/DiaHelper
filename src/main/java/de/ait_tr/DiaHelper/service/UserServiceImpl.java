@@ -1,6 +1,5 @@
 package de.ait_tr.DiaHelper.service;
 
-import de.ait_tr.DiaHelper.domain.dto.UserDto;
 import de.ait_tr.DiaHelper.domain.entity.User;
 import de.ait_tr.DiaHelper.exception_handling.exceptions.UserNotFoundException;
 import de.ait_tr.DiaHelper.repository.UserRepository;
@@ -37,18 +36,42 @@ public class UserServiceImpl implements UserService {
         }
         return user;
     }
+    @Override
+    public UserDetails loadUserByEmail(String email) throws UsernameNotFoundException {
+
+        User user = repository.findByEmail(email);
+        if (user == null) {
+            throw new UsernameNotFoundException("User not found with email: " + email);
+        }
+        return user;
+    }
 
     public void register(User user) {
+        String password = PasswordHelper.generatePassword(8);
         user.setId(null);
-        user.setPassword(encoder.encode(user.getPassword()));
+        user.setPassword(encoder.encode(password));//sgenirirovat parol is 6 znakov
         user.setRoles(Set.of(roleService.getRoleUser()));
-        user.setActive(false);
+        user.setActive(true);
 
         user.setGlucoseLevel(BigDecimal.valueOf(0.00));
 
         repository.save(user);
 
-        emailService.sendConfirmationEmail(user);
+        emailService.sendConfirmationEmail(user, password);
+    }
+
+    public void updatePassword(User user) {
+        String password = PasswordHelper.generatePassword(8);
+        //user.setId(null);
+        user.setPassword(encoder.encode(password));//sgenirirovat parol is 6 znakov
+        //user.setRoles(Set.of(roleService.getRoleUser()));
+        user.setActive(true);
+
+     //   user.setGlucoseLevel(BigDecimal.valueOf(0.00));
+
+        repository.save(user);
+
+        emailService.sendUpdateToPassword(user, password);
     }
 
     @Override

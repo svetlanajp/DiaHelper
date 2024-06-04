@@ -31,12 +31,12 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    public void sendConfirmationEmail(User user) {
+    public void sendConfirmationEmail(User user, String password) {
 
         MimeMessage message = sender.createMimeMessage();
 
         MimeMessageHelper helper = new MimeMessageHelper(message, "UTF-8");
-        String text = generateMessageText(user);
+        String text = generateMessageText(user, password);
 
 
         try {
@@ -50,16 +50,53 @@ public class EmailServiceImpl implements EmailService {
         sender.send(message);
     }
 
-    private String generateMessageText(User user) {
-        try {
+    @Override
+    public void sendUpdateToPassword(User user, String password) {
+        MimeMessage message = sender.createMimeMessage();
 
+        MimeMessageHelper helper = new MimeMessageHelper(message, "UTF-8");
+        String text = generateMessageNewPasswordText(user, password);
+
+
+        try {
+            helper.setFrom("svitlanajpaitstudent@gmail.com");
+            helper.setTo(user.getEmail());
+            helper.setSubject("New password");
+            helper.setText(text, true);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        sender.send(message);
+
+    }
+
+    private String generateMessageText(User user, String password) {
+        try {
             Template template = mailConfiguration.getTemplate("confirm_registration_mail.ftlh");
 
             String code = confirmationService.generateConfirmationCode(user);
 
             Map<String, Object> model = new HashMap<>();
             model.put("name", user.getUsername());
-            model.put("link", "http://localhost:8080/register?code=" + code);
+            model.put("password", password);
+//            model.put("link", "http://localhost:8080/register?code=" + code);
+
+
+            return FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private String generateMessageNewPasswordText(User user, String password) {
+        try {
+            Template template = mailConfiguration.getTemplate("update_password_mail.ftlh");
+
+            String code = confirmationService.generateConfirmationCode(user);
+
+            Map<String, Object> model = new HashMap<>();
+            model.put("name", user.getUsername());
+            model.put("password", password);
 
             return FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
         } catch (Exception e) {

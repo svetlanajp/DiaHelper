@@ -22,4 +22,6 @@ public class RegistrationController {
         service.register(user);
         return new Response("Registration complete. Please check your email.");
     }
+
+
 }

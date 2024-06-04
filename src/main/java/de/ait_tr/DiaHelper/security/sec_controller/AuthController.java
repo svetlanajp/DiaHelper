@@ -1,9 +1,11 @@
 package de.ait_tr.DiaHelper.security.sec_controller;
 
 import de.ait_tr.DiaHelper.domain.entity.User;
+import de.ait_tr.DiaHelper.exception_handling.Response;
 import de.ait_tr.DiaHelper.security.sec_dto.RefreshRequestDto;
 import de.ait_tr.DiaHelper.security.sec_dto.TokenResponseDto;
 import de.ait_tr.DiaHelper.security.sec_service.AuthService;
+import jakarta.security.auth.message.AuthException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
@@ -60,4 +62,24 @@ public class AuthController {
         cookie.setMaxAge(0);
         response.addCookie(cookie);
     }
+
+    @PutMapping("/update")
+    public Response updatePassword(@RequestBody User user) throws AuthException {
+        service.updatePassword(user);
+        return new Response("Please check your email.");
+    }
+//    public ResponseEntity<Object> updatePassword(@RequestBody User user, HttpServletResponse response) {
+//        try {
+//            TokenResponseDto tokenDto = service.updatePassword(user);
+//            Cookie cookie = new Cookie("Access-Token", tokenDto.getAccessToken());
+//            cookie.setPath("/");
+//
+//            cookie.setHttpOnly(true);
+//            response.addCookie(cookie);
+//            return ResponseEntity.ok(tokenDto);
+//
+//        } catch (Exception e) {
+//            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+//        }
+//    }
 }
