@@ -45,11 +45,11 @@ public class TokenService {
 
         //генерация токен
         return Jwts.builder()
-                .subject(user.getUsername())//setSubject()-работает со старой версией//логин
+                .subject(user.getEmail())//setSubject()-работает со старой версией//логин
                 .expiration(expirationDate)
                 .signWith(accessKey)
                 .claim("roles", user.getAuthorities())
-                .claim("name", user.getUsername())//реальное имя
+                .claim("email", user.getEmail())//реальное имя
                 .compact();
     }
 
@@ -64,7 +64,7 @@ public class TokenService {
 
         //генерация токен
         return Jwts.builder()
-                .subject(user.getUsername())
+                .subject(user.getEmail())
                 .expiration(expirationDate)
                 .signWith(refreshKey)
                 .compact();
@@ -114,7 +114,7 @@ public class TokenService {
 
     //объект Claims нужно преобразовать к AuthInfo. преобразование(маппинг) типов
     public AuthInfo generateAuthInfo(Claims claims) {
-        String username = claims.getSubject();
+        String email = claims.getSubject();
         List<LinkedHashMap<String, String>> rolesList = (List<LinkedHashMap<String, String>>) claims.get("roles");
         Set<Role> roles = new HashSet<>();
 
@@ -123,7 +123,7 @@ public class TokenService {
             Role role = roleRepository.findByTitle(roleTitle);
             roles.add(role);
         }
-        return new AuthInfo(username, roles);
+        return new AuthInfo(email, roles);
     }
 
 }

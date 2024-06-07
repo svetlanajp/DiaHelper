@@ -105,8 +105,16 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-    public UserDto getUserProfile(Long id) {
-        User user = getUserById(id);
+    public User getUserByEmail(String email) {
+        if (email == null) {
+            throw new UserNotFoundException(1L);
+        }
+        User user = repository.findByEmail(email);
+        return user;
+    }
+
+    public UserDto getUserProfile(String email) {
+        User user = getUserByEmail(email);
         return mappingService.mapEntityToDto(user);}
 
     @Override

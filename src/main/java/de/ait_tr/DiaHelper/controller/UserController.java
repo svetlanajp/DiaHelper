@@ -4,6 +4,7 @@ import de.ait_tr.DiaHelper.domain.dto.UserDto;
 import de.ait_tr.DiaHelper.domain.entity.User;
 import de.ait_tr.DiaHelper.service.interfaces.UserService;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -20,9 +21,9 @@ public class UserController {
         return service.getUserById(id);
     }
 
-    @GetMapping("/{id}/profile")
-    public UserDto getUserProfile(@PathVariable Long id) {
-        return service.getUserProfile(id);
+    @GetMapping("/profile")
+    public UserDto getUserProfile(@AuthenticationPrincipal String email) {
+        return service.getUserProfile(email);
     }
 
     @PutMapping("/{id}/updated-user")

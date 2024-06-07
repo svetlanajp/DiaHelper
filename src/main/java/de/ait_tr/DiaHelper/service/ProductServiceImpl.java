@@ -42,10 +42,11 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDto getById(Long id) {
-        Optional<ProductDto> product = products.stream()
-                .filter(p -> p.getId().equals(id))
-                .findFirst();
-        return product.orElse(null);
+//        Optional<ProductDto> product = products.stream()
+//                .filter(p -> p.getId().equals(id))
+//                .findFirst();
+//        return product.orElse(null);
+        return repository.findById(id).map(p -> mappingService.mapEntityToDto(p)).orElse(null);
     }
 
     @Override

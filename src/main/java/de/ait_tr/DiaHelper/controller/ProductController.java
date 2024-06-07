@@ -16,8 +16,8 @@ public class ProductController {
         this.service = service;
     }
 
-    @GetMapping("/**")
-    public ProductDto getById(@RequestParam Long id) {
+    @GetMapping("/{product-id}")
+    public ProductDto getById(@PathVariable("product-id") Long id) {
         return service.getById(id);
     } //  localhost:8080/products/5
 
