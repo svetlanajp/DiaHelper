@@ -26,9 +26,9 @@ public class UserController {
         return service.getUserProfile(email);
     }
 
-    @PutMapping("/{id}/updated-user")
-    public User updateUser(@RequestBody User updatedUser) {
-        return service.update(updatedUser);
+    @PutMapping("/updated-user")
+    public User updateUser(@RequestBody User updatedUser, @AuthenticationPrincipal String email){
+        return service.update(updatedUser, email);
     }
 
 }

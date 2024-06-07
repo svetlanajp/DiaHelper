@@ -27,12 +27,13 @@ public class UserServiceImpl implements UserService {
     private EmailService emailService;
     private UserMappingService mappingService;
 
-    public UserServiceImpl(UserRepository repository, BCryptPasswordEncoder encoder, RoleService roleService, EmailService emailService,UserMappingService mappingService) {
+
+    public UserServiceImpl(UserRepository repository, BCryptPasswordEncoder encoder, RoleService roleService, EmailService emailService, UserMappingService mappingService) {
         this.repository = repository;
         this.encoder = encoder;
         this.roleService = roleService;
         this.emailService = emailService;
-        this.mappingService=mappingService;
+        this.mappingService = mappingService;
     }
 
     @Override
@@ -83,7 +84,7 @@ public class UserServiceImpl implements UserService {
         //user.setRoles(Set.of(roleService.getRoleUser()));
         user.setActive(true);
 
-     //   user.setGlucoseLevel(BigDecimal.valueOf(0.00));
+        //   user.setGlucoseLevel(BigDecimal.valueOf(0.00));
 
         repository.save(user);
 
@@ -115,25 +116,24 @@ public class UserServiceImpl implements UserService {
 
     public UserDto getUserProfile(String email) {
         User user = getUserByEmail(email);
-        return mappingService.mapEntityToDto(user);}
+        return mappingService.mapEntityToDto(user);
+    }
 
     @Override
     @Transactional
-    public User update(User updatedUser) {
-
-        User user = repository.findById(updatedUser.getId()).orElseThrow(() -> new UserNotFoundException(updatedUser.getId()));
-
+    public User update(User updatedUser, String email) {
+        User user = getUserByEmail(email);
+        if (user == null) {
+            throw new UserWithThisEmailNotFoundException(email);
+        }
         user.setAge(updatedUser.getAge());
         user.setHeight(updatedUser.getHeight());
         user.setWeight(updatedUser.getWeight());
         user.setGlucoseLevel(updatedUser.getGlucoseLevel());
-
         return repository.save(user);
     }
-
 
 //    @Override
 //    public void deleteById(Long id) {
 //    }
-
 }
