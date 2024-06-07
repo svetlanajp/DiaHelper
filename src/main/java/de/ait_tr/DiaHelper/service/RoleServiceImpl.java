@@ -16,10 +16,11 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public Role getRoleUser() {
         Role role = repository.findByTitle("ROLE_USER");
-//
-//        if (role == null) {
-//            throw new RuntimeException("Database does not contain ROLE_USER");
-//        }
+
+        if (role == null) {
+            throw new RuntimeException("Database does not contain ROLE_USER");
+        }
+
         return role;
 
     }
