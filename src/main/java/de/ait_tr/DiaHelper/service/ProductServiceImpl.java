@@ -2,6 +2,7 @@ package de.ait_tr.DiaHelper.service;
 
 import de.ait_tr.DiaHelper.domain.dto.ProductDto;
 import de.ait_tr.DiaHelper.domain.entity.Product;
+import de.ait_tr.DiaHelper.exception_handling.exceptions.ProductNotFoundException;
 import de.ait_tr.DiaHelper.repository.ProductRepository;
 import de.ait_tr.DiaHelper.service.interfaces.ProductService;
 import de.ait_tr.DiaHelper.service.mapping.ProductMappingService;
@@ -46,7 +47,8 @@ public class ProductServiceImpl implements ProductService {
 //                .filter(p -> p.getId().equals(id))
 //                .findFirst();
 //        return product.orElse(null);
-        return repository.findById(id).map(p -> mappingService.mapEntityToDto(p)).orElse(null);
+        return repository.findById(id).map(p -> mappingService.mapEntityToDto(p))
+                .orElseThrow(()-> new ProductNotFoundException(id));
     }
 
     @Override
