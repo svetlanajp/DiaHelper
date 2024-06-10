@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "user")
-public class User  implements UserDetails {
+public class User implements UserDetails {
 
 //    public static void main(String[] args) {
 //        new BCryptPasswordEncoder().encode("111");
@@ -55,6 +55,8 @@ public class User  implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Role> roles;
+    @ManyToMany(mappedBy = "forFavorites")
+    private Set<Product> products;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -204,23 +206,31 @@ public class User  implements UserDetails {
         this.age = age;
     }
 
+    public Set<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(Set<Product> products) {
+        this.products = products;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return isActive == user.isActive && Double.compare(user.weight, weight) == 0 && Double.compare(user.height, height) == 0 && age == user.age && Objects.equals(id, user.id) && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(roles, user.roles) && Objects.equals(email, user.email) && Objects.equals(glucoseLevel, user.glucoseLevel);
+        return isActive == user.isActive && Double.compare(user.weight, weight) == 0 && Double.compare(user.height, height) == 0 && age == user.age && Objects.equals(id, user.id) && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(roles, user.roles) && Objects.equals(products, user.products) && Objects.equals(email, user.email) && Objects.equals(glucoseLevel, user.glucoseLevel);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, password, isActive, roles, email, glucoseLevel, weight, height, age);
+        return Objects.hash(id, username, password, isActive, roles, products, email, glucoseLevel, weight, height, age);
     }
 
     @Override
     public String toString() {
-        return String.format("User: ID - %d, name - %s, password - %s, active - %s, role - %s, email - %s, glucoseLevel - %.2f, weight - %.2f, height - %.2f, age - %d",
-                id, username, password, isActive ? "yes" : "no", roles, email, glucoseLevel, weight, height, age);
+        return String.format("User: ID - %d, name - %s, password - %s, active - %s, role - %s, email - %s, glucoseLevel - %.2f, weight - %.2f, height - %.2f, age - %d, products - %d",
+                id, username, password, isActive ? "yes" : "no", roles, email, glucoseLevel, weight, height, age,products.size());
     }
 
 

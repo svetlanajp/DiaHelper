@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
 import java.util.Objects;
+import java.util.Set;
 
 
 @Entity
@@ -31,6 +32,12 @@ public class Product {
     @NotNull(message = "Can not be null")
     @NotBlank(message = "Can not be blank")
     private int calories;
+    @ManyToMany
+    @JoinTable(
+            name = "user_product",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private Set<User> forFavorites;
 
     public Product() {
     }
@@ -39,7 +46,7 @@ public class Product {
         this.id = id;
         this.productTitle = productTitle;
         this.calories = calories;
-      }
+    }
 
 
     public Long getId() {
@@ -66,17 +73,25 @@ public class Product {
         this.calories = calories;
     }
 
+    public Set<User> getForFavorites() {
+        return forFavorites;
+    }
+
+    public void setForFavorites(Set<User> forFavorites) {
+        this.forFavorites = forFavorites;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Product product = (Product) o;
-        return calories == product.calories && Objects.equals(id, product.id) && Objects.equals(productTitle, product.productTitle);
+        return calories == product.calories && Objects.equals(id, product.id) && Objects.equals(productTitle, product.productTitle) && Objects.equals(forFavorites, product.forFavorites);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, productTitle, calories);
+        return Objects.hash(id, productTitle, calories, forFavorites);
     }
 
     @Override
