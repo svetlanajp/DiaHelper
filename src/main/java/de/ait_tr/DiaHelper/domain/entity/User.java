@@ -9,6 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.math.BigDecimal;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -55,8 +56,14 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Role> roles;
-    @ManyToMany(mappedBy = "forFavorites")
-    private Set<Product> products;
+   // @ManyToMany(mappedBy = "forFavorites")
+   @ManyToMany
+   @JoinTable(
+           name = "user_product",
+           joinColumns = @JoinColumn(name = "user_id"),
+           inverseJoinColumns = @JoinColumn(name = "product_id")
+   )
+    private Set<Product> products=new HashSet<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
