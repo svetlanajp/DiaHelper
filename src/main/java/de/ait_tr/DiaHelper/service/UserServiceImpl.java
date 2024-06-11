@@ -1,10 +1,13 @@
 package de.ait_tr.DiaHelper.service;
 
 import de.ait_tr.DiaHelper.domain.dto.UserDto;
+import de.ait_tr.DiaHelper.domain.entity.Product;
 import de.ait_tr.DiaHelper.domain.entity.User;
+import de.ait_tr.DiaHelper.exception_handling.exceptions.ProductNotFoundException;
 import de.ait_tr.DiaHelper.exception_handling.exceptions.UserNotFoundException;
 import de.ait_tr.DiaHelper.exception_handling.exceptions.UserWithThisEmailIsAlreadyRegisteredException;
 import de.ait_tr.DiaHelper.exception_handling.exceptions.UserWithThisEmailNotFoundException;
+import de.ait_tr.DiaHelper.repository.ProductRepository;
 import de.ait_tr.DiaHelper.repository.UserRepository;
 import de.ait_tr.DiaHelper.service.interfaces.EmailService;
 import de.ait_tr.DiaHelper.service.interfaces.RoleService;
@@ -26,14 +29,24 @@ public class UserServiceImpl implements UserService {
     private RoleService roleService;
     private EmailService emailService;
     private UserMappingService mappingService;
+    private ProductRepository productRepository;
 
 
-    public UserServiceImpl(UserRepository repository, BCryptPasswordEncoder encoder, RoleService roleService, EmailService emailService, UserMappingService mappingService) {
+//    public UserServiceImpl(UserRepository repository, BCryptPasswordEncoder encoder, RoleService roleService, EmailService emailService, UserMappingService mappingService) {
+//        this.repository = repository;
+//        this.encoder = encoder;
+//        this.roleService = roleService;
+//        this.emailService = emailService;
+//        this.mappingService = mappingService;
+//    }
+
+    public UserServiceImpl(UserRepository repository, BCryptPasswordEncoder encoder, RoleService roleService, EmailService emailService, UserMappingService mappingService, ProductRepository productRepository) {
         this.repository = repository;
         this.encoder = encoder;
         this.roleService = roleService;
         this.emailService = emailService;
         this.mappingService = mappingService;
+        this.productRepository = productRepository;
     }
 
     @Override
@@ -135,7 +148,43 @@ public class UserServiceImpl implements UserService {
         user.setGlucoseLevel(updatedUser.getGlucoseLevel());
         return repository.save(user);
     }
+@Transactional
+    public void addFavoriteProductToUser(String email, Product product) {
+        User user = getUserByEmail(email);
+        if (user == null) {
+            throw new UserWithThisEmailNotFoundException(email);
+        }
+        Product existingProduct = productRepository.findByProductTitle(product.getProductTitle());
+        if (existingProduct == null) {
+           existingProduct= productRepository.save(product);
+        }
+        user.getProducts().add(existingProduct);
+        repository.save(user);
+    }
 
+    @Override
+    @Transactional
+    public void removeFavoriteProductFromUser(String email, Product product) {
+        User user = getUserByEmail(email);
+        if (user == null) {
+            throw new UserWithThisEmailNotFoundException(email);
+        }
+        Product existingProduct = productRepository.findByProductTitle(product.getProductTitle());
+        if (existingProduct == null) {
+           throw new ProductNotFoundException(product.getProductTitle());
+        }
+        user.getProducts().remove(existingProduct);
+         repository.save(user);
+    }
+
+    @Override
+    public Set<Product> getFavoriteUserProduct(String email) {
+        User user = getUserByEmail(email);
+        if (user == null) {
+            throw new UserWithThisEmailNotFoundException(email);
+        }
+        return user.getProducts();
+    }
 //    @Override
 //    public void deleteById(Long id) {
 //    }

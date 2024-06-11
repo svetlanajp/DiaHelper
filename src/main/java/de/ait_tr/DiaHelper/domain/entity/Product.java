@@ -32,11 +32,12 @@ public class Product {
     @NotNull(message = "Can not be null")
     @NotBlank(message = "Can not be blank")
     private int calories;
-    @ManyToMany
-    @JoinTable(
-            name = "user_product",
-            joinColumns = @JoinColumn(name = "product_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id"))
+//    @ManyToMany
+//    @JoinTable(
+//            name = "user_product",
+//            joinColumns = @JoinColumn(name = "product_id"),
+//            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    @ManyToMany(mappedBy = "products")
     private Set<User> forFavorites;
 
     public Product() {
