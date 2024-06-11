@@ -59,7 +59,9 @@ public class AuthService {
             throw new AuthException("Password is incorrect");
         }
     }
-
+    public void logout(@NonNull String email) {
+        refreshStorage.remove(email);
+    }
     public  void updatePassword (@NonNull User inboundUser) throws AuthException {
         String email = inboundUser.getEmail();
         User foundUser = (User) userService.loadUserByEmail(email);

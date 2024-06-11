@@ -40,6 +40,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/auth").permitAll()
                         .requestMatchers("/api/auth/update").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/auth/login", "/api/auth/access").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/auth/logout").hasRole("USER")
                         // .requestMatchers(HttpMethod.GET, "/api/users").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/users/**").hasRole("USER")
                         .requestMatchers(HttpMethod.PUT, "/api/users/**").hasRole("USER")
