@@ -7,10 +7,12 @@ import de.ait_tr.DiaHelper.security.sec_dto.TokenResponseDto;
 import de.ait_tr.DiaHelper.security.sec_service.AuthService;
 import jakarta.security.auth.message.AuthException;
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -53,14 +55,31 @@ public class AuthController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
-    @GetMapping("/logout")
-    public void logout(HttpServletResponse response){
-        Cookie cookie = new Cookie("Access-Token", null);
-        cookie.setPath("/");
-        //http-only cookie
-        cookie.setHttpOnly(true);
-        cookie.setMaxAge(0);
-        response.addCookie(cookie);
+
+//    @GetMapping("/logout")
+//    public void logout(HttpServletResponse response) {
+//        Cookie cookie = new Cookie("Access-Token", null);
+//        cookie.setPath("/");
+//        //http-only cookie
+//        cookie.setHttpOnly(true);
+//        cookie.setMaxAge(0);
+//        response.addCookie(cookie);
+//    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<Object> logout(@AuthenticationPrincipal String email, HttpServletRequest request, HttpServletResponse response) {
+        try {
+            service.logout(email);
+            Cookie cookie = new Cookie("Access-Token", null);
+            cookie.setPath("/");
+            cookie.setHttpOnly(true);
+            cookie.setMaxAge(0);
+            response.addCookie(cookie);
+
+            return ResponseEntity.ok("Logged out successfully");
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PutMapping("/update")
