@@ -87,12 +87,12 @@ public class Product {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Product product = (Product) o;
-        return calories == product.calories && Objects.equals(id, product.id) && Objects.equals(productTitle, product.productTitle) && Objects.equals(forFavorites, product.forFavorites);
+        return calories == product.calories && Objects.equals(productTitle, product.productTitle);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, productTitle, calories, forFavorites);
+        return Objects.hash( productTitle, calories);
     }
 
     @Override
