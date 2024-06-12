@@ -57,13 +57,14 @@ public class User implements UserDetails {
     )
     private Set<Role> roles;
    // @ManyToMany(mappedBy = "forFavorites")
-   @ManyToMany
+
+   @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
    @JoinTable(
            name = "user_product",
            joinColumns = @JoinColumn(name = "user_id"),
            inverseJoinColumns = @JoinColumn(name = "product_id")
    )
-    private Set<Product> products=new HashSet<>();
+    private Set<Product> products = new HashSet<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

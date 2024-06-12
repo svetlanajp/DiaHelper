@@ -41,11 +41,11 @@ public class SecurityConfig {
                         .requestMatchers("/api/auth/update").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/auth/login", "/api/auth/access").permitAll()
                         // .requestMatchers(HttpMethod.GET, "/api/users").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/users/**").hasRole("USER")
+                        .requestMatchers(HttpMethod.GET, "/api/users/**").hasRole("USER")//
                         .requestMatchers(HttpMethod.PUT, "/api/users/**").hasRole("USER")
                         .requestMatchers(HttpMethod.POST, "/api/users/favorites/add").hasRole("USER")
                         .requestMatchers(HttpMethod.DELETE, "/api/users/**").hasRole("USER")
-                        .requestMatchers(HttpMethod.GET, "/api/users/favorites/list").hasRole("USER")
+                        //.requestMatchers(HttpMethod.GET, "/api/users/favorites/list").hasRole("USER")
                         .requestMatchers(HttpMethod.GET, "/api/products/**").hasAnyRole("ADMIN", "USER")
                         .requestMatchers(HttpMethod.POST, "/api/products/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/products/**").hasRole("ADMIN")
