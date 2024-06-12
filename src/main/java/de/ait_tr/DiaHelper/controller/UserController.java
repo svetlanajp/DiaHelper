@@ -47,7 +47,7 @@ public class UserController {
     }
 
     @GetMapping("/favorites/list")
-    Set<Product> getFavoriteUserProduct(String email) {
+    Set<Product> getFavoriteUserProduct(@AuthenticationPrincipal String email) {
         return service.getFavoriteUserProduct(email);
     }
 }

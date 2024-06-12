@@ -236,8 +236,8 @@ public class User implements UserDetails {
 
     @Override
     public String toString() {
-        return String.format("User: ID - %d, name - %s, password - %s, active - %s, role - %s, email - %s, glucoseLevel - %.2f, weight - %.2f, height - %.2f, age - %d, products - %d",
-                id, username, password, isActive ? "yes" : "no", roles, email, glucoseLevel, weight, height, age,products.size());
+        return String.format("User: ID - %d, name - %s, password - %s, active - %s, role - %s, email - %s, glucoseLevel - %.2f, weight - %.2f, height - %.2f, age - %d",
+                id, username, password, isActive ? "yes" : "no", roles, email, glucoseLevel, weight, height, age);
     }
 
 

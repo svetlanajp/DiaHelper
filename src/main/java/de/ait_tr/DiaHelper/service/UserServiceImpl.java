@@ -148,7 +148,7 @@ public class UserServiceImpl implements UserService {
         user.setGlucoseLevel(updatedUser.getGlucoseLevel());
         return repository.save(user);
     }
-@Transactional
+    @Transactional
     public void addFavoriteProductToUser(String email, Product product) {
         User user = getUserByEmail(email);
         if (user == null) {
@@ -156,7 +156,7 @@ public class UserServiceImpl implements UserService {
         }
         Product existingProduct = productRepository.findByProductTitle(product.getProductTitle());
         if (existingProduct == null) {
-           existingProduct= productRepository.save(product);
+            existingProduct = productRepository.save(product);
         }
         user.getProducts().add(existingProduct);
         repository.save(user);
@@ -169,12 +169,12 @@ public class UserServiceImpl implements UserService {
         if (user == null) {
             throw new UserWithThisEmailNotFoundException(email);
         }
-        Product existingProduct = productRepository.findByProductTitle(product.getProductTitle());
-        if (existingProduct == null) {
-           throw new ProductNotFoundException(product.getProductTitle());
+        Set<Product> products = user.getProducts();
+        if (products.contains(product)) {
+            products.remove(product);
+            user.setProducts(products);
+            repository.save(user);
         }
-        user.getProducts().remove(existingProduct);
-         repository.save(user);
     }
 
     @Override
