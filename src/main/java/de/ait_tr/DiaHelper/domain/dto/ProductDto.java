@@ -1,13 +1,16 @@
 package de.ait_tr.DiaHelper.domain.dto;
 
+import de.ait_tr.DiaHelper.domain.entity.User;
+
 import java.math.BigDecimal;
 import java.util.Objects;
+import java.util.Set;
 
 public class ProductDto {
     private Long id;
     private String productTitle;
     private int calories;
-
+    private Set<User> forFavorites;
 
     public Long getId() {
         return id;
@@ -32,6 +35,14 @@ public class ProductDto {
 
     public void setCalories(int calories) {
         this.calories = calories;
+    }
+
+    public Set<User> getForFavorites() {
+        return forFavorites;
+    }
+
+    public void setForFavorites(Set<User> forFavorites) {
+        this.forFavorites = forFavorites;
     }
 
     @Override
