@@ -67,7 +67,7 @@ public class ShoppingList {
 
     @Override
     public String toString() {
-        return String.format("Shopping list: ID - %d, title - %s, date - %s",///?????date
+        return String.format("Shopping list: ID - %d, title - %s, date - %s",//?????date
                 id, title,date);
     }
 }

@@ -175,7 +175,25 @@ public class UserServiceImpl implements UserService {
             user.setProducts(products);
             repository.save(user);
         }
+
+
+
+        if (user.getProducts().contains(existingProduct)) {
+            user.getProducts().remove(existingProduct);
+
+        }
+        repository.save(user);
+
     }
+
+   /* @Override
+    public Set<Product> getFavoriteUserProduct(String email) {
+        User user = getUserByEmail(email);
+        if (user == null) {
+            throw new UserWithThisEmailNotFoundException(email);
+        }
+        return user.getProducts();
+    }*/
 
     @Override
     public Set<Product> getFavoriteUserProduct(String email) {
@@ -183,7 +201,13 @@ public class UserServiceImpl implements UserService {
         if (user == null) {
             throw new UserWithThisEmailNotFoundException(email);
         }
-        return user.getProducts();
+        Set<Product> products = user.getProducts();
+        if (products.isEmpty()) {
+            System.out.println("No favorite products found for user: " + email);
+        } else {
+            System.out.println("Found favorite products for user: " + email);
+        }
+        return products;
     }
 //    @Override
 //    public void deleteById(Long id) {
