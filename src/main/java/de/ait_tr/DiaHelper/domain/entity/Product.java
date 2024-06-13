@@ -1,6 +1,5 @@
 package de.ait_tr.DiaHelper.domain.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
@@ -39,7 +38,6 @@ public class Product {
 //            joinColumns = @JoinColumn(name = "product_id"),
 //            inverseJoinColumns = @JoinColumn(name = "user_id"))
     @ManyToMany(mappedBy = "products")
-    @JsonIgnore
     private Set<User> forFavorites;
 
     public Product() {
@@ -94,7 +92,7 @@ public class Product {
 
     @Override
     public int hashCode() {
-        return Objects.hash(productTitle, calories);
+        return Objects.hash( productTitle, calories);
     }
 
     @Override

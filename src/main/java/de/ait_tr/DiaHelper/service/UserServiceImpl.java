@@ -148,7 +148,7 @@ public class UserServiceImpl implements UserService {
         user.setGlucoseLevel(updatedUser.getGlucoseLevel());
         return repository.save(user);
     }
-    @Transactional
+@Transactional
     public void addFavoriteProductToUser(String email, Product product) {
         User user = getUserByEmail(email);
         if (user == null) {
@@ -156,7 +156,7 @@ public class UserServiceImpl implements UserService {
         }
         Product existingProduct = productRepository.findByProductTitle(product.getProductTitle());
         if (existingProduct == null) {
-            existingProduct = productRepository.save(product);
+           existingProduct= productRepository.save(product);
         }
         user.getProducts().add(existingProduct);
         repository.save(user);
@@ -169,13 +169,31 @@ public class UserServiceImpl implements UserService {
         if (user == null) {
             throw new UserWithThisEmailNotFoundException(email);
         }
-        Set<Product> products = user.getProducts();
-        if (products.contains(product)) {
-            products.remove(product);
-            user.setProducts(products);
-            repository.save(user);
+        Product existingProduct = productRepository.findByProductTitle(product.getProductTitle());
+        if (existingProduct == null) {
+           throw new ProductNotFoundException(product.getProductTitle());
         }
+
+        if (user.getProducts().contains(existingProduct)) {
+            user.getProducts().remove(existingProduct);
+
+        }
+        repository.save(user);
+//        user.getProducts().stream()
+//                .filter(p -> p.getProductTitle().equals(existingProduct.getProductTitle()))
+//                .findFirst()
+//                .ifPresent(user.getProducts()::remove);
+//         repository.save(user);
     }
+
+   /* @Override
+    public Set<Product> getFavoriteUserProduct(String email) {
+        User user = getUserByEmail(email);
+        if (user == null) {
+            throw new UserWithThisEmailNotFoundException(email);
+        }
+        return user.getProducts();
+    }*/
 
     @Override
     public Set<Product> getFavoriteUserProduct(String email) {
@@ -183,7 +201,13 @@ public class UserServiceImpl implements UserService {
         if (user == null) {
             throw new UserWithThisEmailNotFoundException(email);
         }
-        return user.getProducts();
+        Set<Product> products = user.getProducts();
+        if (products.isEmpty()) {
+            System.out.println("No favorite products found for user: " + email);
+        } else {
+            System.out.println("Found favorite products for user: " + email);
+        }
+        return products;
     }
 //    @Override
 //    public void deleteById(Long id) {
