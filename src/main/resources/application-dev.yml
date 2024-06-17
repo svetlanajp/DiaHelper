@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/de.ait_tr.DiaHelper
+    url: jdbc:postgresql://localhost:5432/DiaHelper
     username: postgres
     driver-class-name: org.postgresql.Driver
     password: qwerty007
@@ -12,7 +12,7 @@ spring:
         auto_quote_keyword: true
   mail:
     username: youdiahelper@gmail.com
-    password: ioinvhthknwzjrpn
+    password: ranvxxbppctiombz
     host: smtp.gmail.com
     port: 587
     properties:
