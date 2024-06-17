@@ -38,6 +38,10 @@ public class Product {
 //            name = "user_product",
 //            joinColumns = @JoinColumn(name = "product_id"),
 //            inverseJoinColumns = @JoinColumn(name = "user_id"))
+
+    @Column(name="carbohydrates")
+    private double carbohydrates;
+
     @ManyToMany(mappedBy = "products")
     @JsonIgnore
     private Set<User> forFavorites;
@@ -45,12 +49,18 @@ public class Product {
     public Product() {
     }
 
-    public Product(Long id, String productTitle, int calories) {
+//    public Product(Long id, String productTitle, int calories) {
+//        this.id = id;
+//        this.productTitle = productTitle;
+//        this.calories = calories;
+//    }
+    public Product(Long id, String productTitle, int calories, double carbohydrates, Set<User> forFavorites) {
         this.id = id;
         this.productTitle = productTitle;
         this.calories = calories;
+        this.carbohydrates = carbohydrates;
+        this.forFavorites = forFavorites;
     }
-
 
     public Long getId() {
         return id;
@@ -76,6 +86,14 @@ public class Product {
         this.calories = calories;
     }
 
+    public double getCarbohydrates() {
+        return carbohydrates;
+    }
+
+    public void setCarbohydrates(double carbohydrates) {
+        this.carbohydrates = carbohydrates;
+    }
+
     public Set<User> getForFavorites() {
         return forFavorites;
     }
@@ -84,24 +102,38 @@ public class Product {
         this.forFavorites = forFavorites;
     }
 
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (o == null || getClass() != o.getClass()) return false;
+//        Product product = (Product) o;
+//        return calories == product.calories && Objects.equals(productTitle, product.productTitle);
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//
+//        return Objects.hash(productTitle, calories);
+//
+//    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Product product = (Product) o;
-        return calories == product.calories && Objects.equals(productTitle, product.productTitle);
+        return calories == product.calories && Double.compare(product.carbohydrates, carbohydrates) == 0 && Objects.equals(productTitle, product.productTitle);
     }
 
     @Override
     public int hashCode() {
-
-        return Objects.hash(productTitle, calories);
-
+        return Objects.hash(productTitle, calories, carbohydrates);
     }
 
     @Override
     public String toString() {
-        return String.format("Product: ID - %d, product_title - %s, calories - %d",
-                id, productTitle, calories);
+        return String.format("Product: ID - %d, product_title - %s, calories - %d, carbohydrates - %.2f",
+                id, productTitle, calories, carbohydrates);
     }
 }

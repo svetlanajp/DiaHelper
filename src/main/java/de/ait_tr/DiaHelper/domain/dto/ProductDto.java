@@ -10,6 +10,7 @@ public class ProductDto {
     private Long id;
     private String productTitle;
     private int calories;
+    private double carbohydrates;
     private Set<User> forFavorites;
 
     public Long getId() {
@@ -37,6 +38,14 @@ public class ProductDto {
         this.calories = calories;
     }
 
+    public double getCarbohydrates() {
+        return carbohydrates;
+    }
+
+    public void setCarbohydrates(double carbohydrates) {
+        this.carbohydrates = carbohydrates;
+    }
+
     public Set<User> getForFavorites() {
         return forFavorites;
     }
@@ -45,22 +54,35 @@ public class ProductDto {
         this.forFavorites = forFavorites;
     }
 
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (o == null || getClass() != o.getClass()) return false;
+//        ProductDto that = (ProductDto) o;
+//        return calories == that.calories && Objects.equals(id, that.id) && Objects.equals(productTitle, that.productTitle);
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(id, productTitle, calories);
+//    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ProductDto that = (ProductDto) o;
-        return calories == that.calories && Objects.equals(id, that.id) && Objects.equals(productTitle, that.productTitle);
+        return calories == that.calories && Double.compare(that.carbohydrates, carbohydrates) == 0 && Objects.equals(id, that.id) && Objects.equals(productTitle, that.productTitle);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, productTitle, calories);
+        return Objects.hash(id, productTitle, calories, carbohydrates);
     }
 
     @Override
     public String toString() {
-        return String.format("Product: ID - %d, productTitle - %s, calories - %d ",
-                id, productTitle, calories);
+        return String.format("Product: ID - %d, productTitle - %s, calories - %d, carbohydrates - %.2f ",
+                id, productTitle, calories, carbohydrates);
     }
 }
